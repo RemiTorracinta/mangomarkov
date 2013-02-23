@@ -15,10 +15,6 @@ class MarkovChain(object):
     statuses = self.api.GetUserTimeline("bkcmath")
     statuses = reduce(lambda acc,x: acc + [x.text], statuses, [])
     self.hashtags = []
-    for status in statuses:
-      for word in status.split(' '):
-        if len(word) > 0 and word[0] == '#':
-          self.hashtags += [word]
 
     self.chain = {}
     word1 = "\n"
