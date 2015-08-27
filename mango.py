@@ -1,8 +1,11 @@
 import random
 from twython import Twython
 import time
+import nltk
+import enchant
 
 class MarkovChain(object):
+  d = enchant.Dict("en_US")
   chain = {}
   twitter = ""
   CONSUMER_KEY = 'RkQqA84KN38hydz2eMboomHCd'
@@ -37,7 +40,7 @@ class MarkovChain(object):
           word2 = current_word
   def chirrrp(self):
 
-    word_count = random.randint(3,15)
+    word_count = random.randint(1,13)
     #word_count = 10
     generated_sentence = ""
     word_tuple = random.choice(self.chain.keys())
@@ -45,6 +48,11 @@ class MarkovChain(object):
     w2 = word_tuple[1]
 
     for i in xrange(word_count):
+      newword = random.choice(self.chain[(w1, w2)])
+      generated_sentence = generated_sentence + " " + newword
+      w1 = w2
+      w2 = newword
+    while self.d.check(newword):
       newword = random.choice(self.chain[(w1, w2)])
       generated_sentence = generated_sentence + " " + newword
       w1 = w2
